@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Pet {
+  @@map("pets")
+
+  id      Int     @id @default(autoincrement())
+  name    String
+  type    String
+  owner   String
+  dob     DateTime
+  vaccines Vaccine[]
+  allergies Allergy[]
+}
+
+model Vaccine {
+  @@map("vaccines")
+
+  id          Int     @id @default(autoincrement())
+  name        String
+  date        DateTime
+
+  petId       Int     @map("pet_id")
+  pet         Pet     @relation(fields: [petId], references: [id])
+}
+
+model Allergy {
+  @@map("allergies")
+
+  id          Int     @id @default(autoincrement())
+  name      String
+  reactions   String
+  severity    String
+
+  petId       Int     @map("pet_id")
+  pet         Pet     @relation(fields: [petId], references: [id])
+}

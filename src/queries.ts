@@ -37,7 +37,6 @@ const getPets = async (req: any, res: any) => {
 
 const createPet = async (req: any, res: any) => {
   const { name, type, owner, dob } = req.body;
-
   if (!name || !type || !owner || !dob) {
     return res.status(400).send("all pet fields required");
   }
@@ -120,11 +119,35 @@ const getAllergiesForPet = async(req: any, res: any) => {
   }
 }
 
+const editPet = async (req: any, res: any) => {
+  const { id, name, type, owner } = req.body;
+  if (!id || !name || !type || !owner) {
+    return res.status(400).send("all pet fields required");
+  }
+
+  try {
+    const pet = await prisma.pet.update({
+      where: {
+        id
+      },
+      data: {
+        name,
+        type,
+        owner,
+      },
+    });
+    res.json(pet);
+  } catch (error) {
+    res.status(500).send("Oops, something went wrong");
+  }
+};
+
 module.exports = {
   getPets,
   createPet,
   addVaccineRecord,
   addAllergyRecord,
   getVaccinesForPet,
-  getAllergiesForPet
+  getAllergiesForPet,
+  editPet,
 };

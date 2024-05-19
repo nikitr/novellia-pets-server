@@ -25,6 +25,7 @@ app.post("/add-vaccine", db.addVaccineRecord);
 app.post("/add-allergy", db.addAllergyRecord);
 app.get("/get-vaccines", db.getVaccinesForPet);
 app.get("/get-allergies", db.getAllergiesForPet);
+app.put("/edit-pet", db.editPet);
 
 app.listen(process.env.PORT, () => {
   console.log(`App running on port ${process.env.PORT}.`);

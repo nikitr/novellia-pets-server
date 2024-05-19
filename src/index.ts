@@ -3,7 +3,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const db = require("./queries");
-// const prisma = new PrismaClient();
 require("dotenv").config();
 
 app.use(express.json());
@@ -21,7 +20,6 @@ app.get("/", (request: any, response: any) => {
 });
 
 app.get("/pets", db.getPets);
-// app.get("/pet", db.getUserById);
 app.post("/create-pet", db.createPet);
 app.post("/add-vaccine", db.addVaccineRecord);
 app.post("/add-allergy", db.addAllergyRecord);
